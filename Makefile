@@ -1,10 +1,7 @@
-ifndef TOOL_NAME
-    $(error TOOL_NAME is not set)
-endif
-
+TOOL_NAME=$(shell ls *-cli.sh | head -1 | sed 's/.sh//')
 
 install: autocomplete.bash
-	install -D -m 0755 -v x.sh ${HOME}/.local/bin/${TOOL_NAME}
+	install -D -m 0755 -v $(TOOL_NAME).sh ${HOME}/.local/bin/${TOOL_NAME}
 	install -D -m 0755 -v autocomplete.bash ${HOME}/.bash_completion.d/${TOOL_NAME}.bash
 	install -D -m 0400 -v README.md ${HOME}/.local/share/doc/${TOOL_NAME}.md
 	< $(HOME)/.bash_completion grep ${TOOL_NAME}.bash || echo 'source $$HOME/.bash_completion.d/${TOOL_NAME}.bash' >> $(HOME)/.bash_completion
